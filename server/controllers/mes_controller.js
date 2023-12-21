@@ -3,7 +3,7 @@ import Message from "../models/message_model.js"
 class MesController {
     async createMessage(req, res) {
         try {
-            const message = await Message.create(req.body)
+            await Message.create(req.body)
             res.status(200).json({message: "Message has been created"})
         } catch (e) {
             console.log(e)
@@ -21,8 +21,8 @@ class MesController {
     }
     async getNewMessages(req, res) {
         try {
-            const message = await Message.findAll({where: {status: "new"} })
-            res.status(200).json(message)
+            const messages = await Message.findAll({where: {status: "new"} })
+            res.status(200).json(messages)
         } catch (e) {
             console.log(e)
             res.status(500).json({message: "Server error"})
@@ -30,8 +30,8 @@ class MesController {
     }
     async getViewedMessages(req, res) {
         try {
-            const message = await Message.findAll({where: {status: "viewed"} })
-            res.status(200).json(message)
+            const messages = await Message.findAll({where: {status: "viewed"} })
+            res.status(200).json(messages)
         } catch (e) {
             console.log(e)
             res.status(500).json({message: "Server error"})
@@ -39,8 +39,8 @@ class MesController {
     }
     async getAllMessages(req, res) {
         try {
-            const message = await Message.findAll()
-            res.status(200).json(message)
+            const messages = await Message.findAll()
+            res.status(200).json(messages)
         } catch (e) {
             console.log(e)
             res.status(500).json({message: "Server error"})
@@ -48,7 +48,7 @@ class MesController {
     }
     async updateMessage(req, res) {
         try {
-            const message = await Message.update(req.body,
+            await Message.update(req.body,
                 {where: {id: req.body.id}})
             res.status(200).json({message: "Message has been updated"})
         } catch (e) {
@@ -58,8 +58,7 @@ class MesController {
     }
     async deleteMessage(req, res) {
         try {
-            const message = await Message.destroy({where: {id: req.body.id} })
-            console.log(message)
+            await Message.destroy({where: {id: req.body.id} })
             res.status(200).json({message: "Message has been deleted"})
         } catch (e) {
             console.log(e)

@@ -10,8 +10,8 @@ const app = express()
 const PORT = process.env.PORT || 5000
 
 app.use(express.json())
-app.use("online_store/user_mes_api", user_mes_router)
-app.use("online_store/orders_api", orders_router)
+app.use("/online_store/user_mes_api", user_mes_router)
+app.use("/online_store/orders_api", orders_router)
 app.use(express.urlencoded({extended: false}))
 
 async function start() {
