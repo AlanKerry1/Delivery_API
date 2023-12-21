@@ -10,7 +10,8 @@ const Order = sequelize.define("order", {
     street: {type: DataTypes.STRING},
     house: {type: DataTypes.INTEGER},
     flat: {type: DataTypes.INTEGER, allowNull:true},
-    comment: {type: DataTypes.TEXT, allowNull: true}
+    comment: {type: DataTypes.TEXT, allowNull: true},
+    status: {type: DataTypes.ENUM("new", "completed"), defaultValue: "new"}
 })
 
 export default Order
