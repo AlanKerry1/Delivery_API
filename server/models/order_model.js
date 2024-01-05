@@ -3,15 +3,13 @@ import { DataTypes } from "sequelize"
 
 const Order = sequelize.define("order", {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    userName: {type: DataTypes.STRING},
-    phoneNumber: {type: DataTypes.INTEGER, unique: true},
-    email: {type: DataTypes.STRING, unique: true, allowNull: true},
-    peopleCount: {type: DataTypes.INTEGER},
-    street: {type: DataTypes.STRING},
-    house: {type: DataTypes.INTEGER},
-    flat: {type: DataTypes.INTEGER, allowNull:true},
-    comment: {type: DataTypes.TEXT, allowNull: true},
-    status: {type: DataTypes.ENUM("new", "completed"), defaultValue: "new"}
+    userName: {type: DataTypes.STRING, allowNull: false},
+    phoneNumber: {type: DataTypes.INTEGER, unique: true, allowNull: false},
+    street: {type: DataTypes.STRING, allowNull: false},
+    house: {type: DataTypes.INTEGER, allowNull: false},
+    flat: {type: DataTypes.INTEGER},
+    comment: {type: DataTypes.TEXT},
+    status: {type: DataTypes.ENUM("NEW", "COMPLETED"), defaultValue: "NEW"}
 })
 
 export default Order
