@@ -3,13 +3,17 @@ import * as uuid from "uuid"
 import path from "path"
 import { fileURLToPath } from 'url';
 import fs from "fs"
+import { validationResult } from "express-validator"
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 function addImageToStatic(img, imgName) {
+    if (!img) {
+        return
+    }
+
     let fileName = imgName || uuid.v4() + ".jpg"
-    console.log("debug")
     img.mv(path.resolve(__dirname, "..", "static", fileName))
     
     return fileName
@@ -18,11 +22,15 @@ function addImageToStatic(img, imgName) {
 class ProductsController {
     async create(req, res) {
         try {
+            const errors = validationResult(req)
+
+            if (!errors.isEmpty()) {
+                return res.status(400).json({message: "Some errors in request", errors})
+            }
+
             const {title, price, description} = req.body
-            console.log(req.files)
-            const {img} = req.files
+            const img = req.files ? req.files.img : undefined
             const fileName = addImageToStatic(img)
-            console.log(fileName)
             const product = await Product.create(
                 {title, price, description, img: fileName}
             )
