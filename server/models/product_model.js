@@ -3,7 +3,7 @@ import { DataTypes } from "sequelize"
 
 const Product = sequelize.define("product", {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    title: {type: DataTypes.STRING, allowNull: false, unique: true},
+    name: {type: DataTypes.STRING, allowNull: false, unique: true},
     img: {type: DataTypes.STRING},
     price: {type: DataTypes.INTEGER, allowNull: false},
     description: {type: DataTypes.TEXT}

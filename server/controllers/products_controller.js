@@ -9,9 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 function addImageToStatic(img, imgName) {
-    if (!img) {
-        return
-    }
+    if (!img) return
 
     let fileName = imgName || uuid.v4() + ".jpg"
     img.mv(path.resolve(__dirname, "..", "static", fileName))
@@ -28,11 +26,11 @@ class ProductsController {
                 return res.status(400).json({message: "Some errors in request", errors})
             }
 
-            const {title, price, description} = req.body
+            const {name, price, description} = req.body
             const img = req.files ? req.files.img : undefined
             const fileName = addImageToStatic(img)
             const product = await Product.create(
-                {title, price, description, img: fileName}
+                {name, price, description, img: fileName}
             )
             return res.json(product)
         } catch (e) {
@@ -61,7 +59,7 @@ class ProductsController {
     
     async update(req, res) {
         try {
-            const {id, title, price, description} = req.body
+            const {id, name, price, description} = req.body
             const {img} = req.files
             const oldProduct = await Product.findOne({where: {id}})
             const imgName = oldProduct.img
@@ -70,7 +68,7 @@ class ProductsController {
                 addImageToStatic(img, imgName)
             }
 
-            await Product.update({title, price, description, img: imgName},
+            await Product.update({name, price, description, img: imgName},
                 {where: {id}}
             )
             const product = await Product.findOne({where: {id}})
