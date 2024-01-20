@@ -5,7 +5,7 @@ import { check } from "express-validator"
 const router = new Router()
 
 router.post("/", [
-    check("title", "Title can't be empty").notEmpty(),
+    check("name", "Title can't be empty").notEmpty(),
     check("price", "Price can't be empty").notEmpty()
 ], ProductsController.create)
 router.get("/", ProductsController.getAll)
