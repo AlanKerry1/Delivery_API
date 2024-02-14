@@ -4,7 +4,11 @@ import sequelize from "./db.js"
 import cors from "cors"
 import fileUpload from "express-fileupload"
 import path from "path"
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from "url"
+import allModels from "./models/all_models.js"
+import { config } from "dotenv"
+
+config()
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

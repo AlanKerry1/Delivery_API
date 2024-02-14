@@ -1,4 +1,5 @@
 import User from "../models/user_model.js"
+import Basket from "../models/basket_model.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import { config } from "dotenv"
@@ -25,7 +26,11 @@ class UserController {
 
             const hashPassword = bcrypt.hashSync(password, 5)
             const user = await User.create({email, password: hashPassword, role})
+            const basket = await Basket.create()
+            user.setBasket(basket)
+            
             const token = generateJWT(user.id, email, user.role)
+
             return res.json({token})
         } catch (e) {
             return res.status(500).json({message: "fuck"})
