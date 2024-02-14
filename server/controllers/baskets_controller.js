@@ -5,13 +5,13 @@ import BasketProduct from "../models/basket_product_model.js"
 class BasketController {
     async addProductToBasket(req, res) {
         try {
-            const {userId, productId, count} = req.body
+            const {userId, productId} = req.body
             const basket = await Basket.findOne({where: {userId}})
             const product = await Product.findOne({where: {id: productId}})
             basket.addProduct(product)
             res.json({message: "Product has been added to basket"})
         } catch (e) {
-            return res.status(500).json(e)
+            return res.status(500).json({message: "Ошибка сервера", userId: req.body.userId || "penis"})
         }
     }
 
