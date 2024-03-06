@@ -1,26 +1,26 @@
 import Order from "../models/order_model.js"
+import Product from "../models/product_model.js"
+import User from "../models/user_model.js"
 
 class OrderController {
     async createOrder(req, res) {
         try {
-            await Order.create(req.body)
+            const {userName, phoneNumber, adress, comment, products} = req.body;
+            const order = await Order.create({userName, phoneNumber, adress, comment});
+            
+            for (let productId of products) {
+                const product = await Product.findOne({where: {id: productId}});
+                order.addProduct(product);
+            }
+
+            const {userId} = req.body;
+
+            if (userId) {
+                const user = await User.findOne({where: {id: userId}});
+                user.addOrder(order);
+            }
+
             res.status(200).json({message: "Order has been created"})
-        } catch (e) {
-            res.status(500).json(e)
-        }
-    }
-    async getNewOrders(req, res) {
-        try {
-            const orders = await Order.findAll({where: {status: "new"}})
-            res.status(200).json(orders)
-        } catch (e) {
-            res.status(500).json(e)
-        }
-    }
-    async getCompletedOrders(req, res) {
-        try {
-            const orders = await Order.findAll({where: {status: "completed"}})
-            res.status(200).json(orders)
         } catch (e) {
             res.status(500).json(e)
         }

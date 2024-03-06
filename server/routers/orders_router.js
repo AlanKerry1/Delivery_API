@@ -1,11 +1,10 @@
 import { Router } from "express"
 import OrderController from "../controllers/orders_controller.js"
+import tokenHandle from "../middlewares/token_handler_middleware.js"
 
 const router = new Router()
 
-router.post("/", OrderController.createOrder)
-router.get("/new", OrderController.getNewOrders)
-router.get("/completed", OrderController.getCompletedOrders)
+router.post("/", tokenHandle(false), OrderController.createOrder)
 router.get("/", OrderController.getAllOrders)
 router.get("/:id", OrderController.getOneOrder)
 router.put("/", OrderController.updateOrder)
