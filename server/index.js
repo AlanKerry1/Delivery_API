@@ -16,6 +16,10 @@ const __dirname = path.dirname(__filename);
 const app = express()
 const PORT = process.env.PORT || 5000
 
+app.get("/", (req, res) => {
+    res.render("<h1>Eсли ты это видишь - то все неимоверно пиздато, ведь я удачно воспользовался хостингом</h1>");
+})
+
 app.use(cors())
 app.use(express.json())
 app.use(fileUpload({}))
